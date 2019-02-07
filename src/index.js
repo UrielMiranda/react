@@ -134,12 +134,27 @@ class App extends React.Component{
     this.state = {
       movies: movies
     }
+    this.handleEvent = this.handleEvent.bind(this);
+  }
+
+  handleEvent(evt){
+    evt.preventDefault();
+    const query = this.doSearch(evt.target.value);
+    console.log(evt.target.value)
+    this.setState({movies:query})
+
+  }
+  doSearch(value){
+    return movies.filter(item =>{
+      const title = item.Title.toLowerCase();
+      return title.includes(value.toLowerCase());
+    })
   }
 
   render(){
     return (
     <section>
-      <input type="text" placeholder="Filter"/>
+      <input onChange={this.handleEvent} type="text" placeholder="Filter"/>
       <Card items={this.state.movies}/>
     </section>
     )
